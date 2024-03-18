@@ -1,38 +1,31 @@
 const bookService = require('../services/books.service');
+const createError = require('http-errors');
 
-async function createBook(req, res) {
+async function createBook(req, res, next) {
     try {
-       const newBook = await bookService.create(req.body);
+        const newBook = await bookService.create(req.body);
 
         res.status(200).json({
             status: 200,
             data: newBook,
         });
-    } catch (err) {
-        console.error(err);
-        res.status(500).json({
-            status: 500,
-            error: err,
-        });
+    } catch(err) {
+        next(createError.InternalServerError(err.message));
     }
 };
 
-async function getBooks(req, res) {
+async function getBooks(req, res, next) {
     try {
         res.status(200).json({
             status: 200,
             data: await bookService.find(req.query),
         });
-    } catch (err) {
-        console.error(err);
-        res.status(500).json({
-            status: 500,
-            error: err,
-        });
+    } catch(err) {
+        next(createError.InternalServerError(err.message));
     }
 };
 
-async function getBook(req, res) {
+async function getBook(req, res, next) {
     try {
         const { bookId } = req.params;
         const book = await bookService.findById(bookId);
@@ -40,7 +33,9 @@ async function getBook(req, res) {
         if (!book) {
             return res.status(400).json({
                 status: 400,
-                message: 'Book is not found.',
+                error: {
+                    message: 'Book not found.'
+                },
             });
         }
 
@@ -48,16 +43,12 @@ async function getBook(req, res) {
             status: 200,
             data: book,
         });
-    } catch (err) {
-        console.error(err);
-        res.status(500).json({
-            status: 500,
-            error: err,
-        });
+    } catch(err) {
+        next(createError.InternalServerError(err.message));
     }
 };
 
-async function updateBook(req, res) {
+async function updateBook(req, res, next) {
     try {
         const { bookId } = req.params;
         const bookData = req.body;
@@ -66,16 +57,12 @@ async function updateBook(req, res) {
         res.status(200).json({
             status: 200,
         });
-    } catch (err) {
-        console.error(err);
-        res.status(500).json({
-            status: 500,
-            error: err,
-        });
+    } catch(err) {
+        next(createError.InternalServerError(err.message));
     }
 };
 
-async function deleteBook(req, res) {
+async function deleteBook(req, res, next) {
     try {
         const { bookId } = req.params;
         await bookService.findByIdAndDelete(bookId);
@@ -83,12 +70,8 @@ async function deleteBook(req, res) {
         res.status(200).json({
             status: 200,
         });
-    } catch (err) {
-        console.error(err);
-        res.status(500).json({
-            status: 500,
-            error: err,
-        });
+    } catch(err) {
+        next(createError.InternalServerError(err.message));
     }
 };
 
