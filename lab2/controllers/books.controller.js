@@ -19,16 +19,19 @@ async function createBook(req, res) {
 
 async function getBooks(req, res) {
     try {
-        res.status(200).json({
-            status: 200,
-            data: await bookService.find(req.query),
-        });
+      //const { sort } = req.query;
+      let books = await bookService.find(req.query);
+  
+      res.status(200).json({
+        status: 200,
+        data: books,
+      });
     } catch (err) {
-        console.error(err);
-        res.status(500).json({
-            status: 500,
-            error: err,
-        });
+      console.error(err);
+      res.status(500).json({
+        status: 500,
+        error: err,
+      });
     }
 };
 

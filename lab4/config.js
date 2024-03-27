@@ -1,7 +1,7 @@
 require('dotenv').config();
 
 const config = {
-    port: process.env.PORT || 5000,
+    port: process.env.PORT || 7000,
     mongodb_uri: process.env.MONGODB_URI || 'mongodb://127.0.0.1:27017/lab2',
 };
 

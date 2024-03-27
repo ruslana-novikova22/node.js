@@ -4,14 +4,17 @@ async function create(book) {
     return bookModel.create(book);
 }
 
-async function find({ searchString = '', page = 1, perPage = 20, sort = {publicationYear: 'desc'} }) {
-    const filter = {};
+async function find({ searchString = '', page = 1, perPage = 20 }) {
+    const filter = {
+    };
 
     return {
-        items: await bookModel.find(filter).sort(sort).skip((page - 1) * perPage).limit(Number(perPage)),
+        items: await bookModel.find(filter).skip((page - 1) * perPage).limit(Number(perPage)),
         count: await bookModel.countDocuments(filter),
     }
 }
+
+
 
 async function findById(id) {
     return bookModel.findById(id);
@@ -25,10 +28,15 @@ async function findByIdAndDelete(id) {
     return bookModel.findByIdAndDelete(id);
 };
 
+async function findOne(filter) {
+    return bookModel.findOne(filter);
+}
+
 module.exports = {
     create,
     find,
     findById,
     findByIdAndUpdate,
     findByIdAndDelete,
+    findOne,
 };

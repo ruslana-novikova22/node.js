@@ -7,11 +7,11 @@ const middleware = require('../middlewares/books.middleware');
 router
     .route('/')
     .get(controller.getBooks)
-    .post(controller.createBook);
+    .post(middleware.checkYear, controller.createBook);
 
 router.route('/:bookId')
-    .get(middleware.bookByIdValidation, controller.getBook)
-    .patch(middleware.bookByIdValidation, controller.updateBook)
-    .delete(middleware.bookByIdValidation, controller.deleteBook);
+    .get(controller.getBook)
+    .patch(middleware.checkYear, controller.updateBook)
+    .delete(controller.deleteBook);
 
 module.exports = router;

@@ -10,13 +10,8 @@ const bookSchema = new Schema({
         type: String,
         trim: true,
     },
-    title: {
-        type: String,
-        trim: true,
-    },
     publicationYear: {
         type: String,
-        unique: true,
         required: true,
         trim: true,
     },
@@ -25,8 +20,7 @@ const bookSchema = new Schema({
         trim: true,
     },
     price: {
-        type: String,
-        unique: true,
+        type: Number,
         required: true,
         trim: true,
     },

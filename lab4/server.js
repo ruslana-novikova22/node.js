@@ -3,7 +3,6 @@ const express = require('express');
 const createError = require('http-errors');
 const { port, mongodb_uri } = require('./config');
 const booksRouter = require('./routers/books.router');
-const { checkYear } = require('./middlewares/books.middleware');
 
 mongoose.connect(mongodb_uri)
   .then(() => {
@@ -28,12 +27,19 @@ app.get('/', (req, res) => {
 
 app.use(express.json());
 
-app.use(checkYear);
-
 app.use('/books', booksRouter);
 
 app.use((req, res, next) => {
   next(createError.NotFound());
+});
+
+app.use((err, req, res, next) => {
+  const erorrStatus = err.status || 500;
+  console.error(`${'\x1b[31m'}[${new Date().toUTCString()}] ${req.method}: ${req.path}. Error(${erorrStatus}): ${err.message}`, '\x1b[0m');
+  res.status(erorrStatus).send({
+      status: erorrStatus,
+      error: err
+  });
 });
 
 app.listen(port, () => {
