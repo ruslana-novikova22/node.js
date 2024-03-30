@@ -15,6 +15,7 @@ async function find({ searchString = '', page = 1, perPage = 20 }) {
 }
 
 
+
 async function findById(id) {
     return bookModel.findById(id);
 }
@@ -27,10 +28,15 @@ async function findByIdAndDelete(id) {
     return bookModel.findByIdAndDelete(id);
 };
 
+async function findOne(filter) {
+    return bookModel.findOne(filter);
+}
+
 module.exports = {
     create,
     find,
     findById,
     findByIdAndUpdate,
     findByIdAndDelete,
+    findOne,
 };

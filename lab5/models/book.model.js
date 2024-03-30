@@ -30,4 +30,4 @@ const bookSchema = new Schema({
     timestamps: true,
 });
 
-module.exports = model("books", bookSchema);
+module.exports = model("books", bookSchema, "books");
