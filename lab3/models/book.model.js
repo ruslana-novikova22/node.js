@@ -12,7 +12,6 @@ const bookSchema = new Schema({
     },
     publicationYear: {
         type: Number,
-        require: true,
     },
     address: {
         type: String,
