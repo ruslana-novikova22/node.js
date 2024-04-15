@@ -6,6 +6,7 @@ const { authenticationCheck } = require('./middlewares/auth.middleware');
 
 const authRouter = require('./routers/auth.router');
 const booksRouter = require('./routers/books.router');
+var usersRouter = require('./routers/users.router');
 
 mongoose.connect(mongodb_uri)
   .then(() => {
@@ -32,6 +33,7 @@ app.use(express.json());
 
 app.use('/auth', authRouter);
 app.use('/books', booksRouter);
+app.use('/users', usersRouter);
 
 app.use((req, res, next) => {
   next(createError.NotFound());
