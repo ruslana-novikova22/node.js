@@ -36,8 +36,6 @@ app.get('/', (req, res) => {
   })
 });
 
-app.use(authenticationCheck);
-
 // Rest of routs
 app.use('/books', booksRouter);
 app.use('/auth', authRouter);

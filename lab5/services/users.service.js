@@ -7,7 +7,6 @@ async function create(user) {
 
 async function find({ searchString = '', page = 1, perPage = 20 }) {
     const filter = {
-        firstName: { $regex: `^${searchString}`, $options: 'gi' },
     };
 
     return {
