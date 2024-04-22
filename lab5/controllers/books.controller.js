@@ -11,7 +11,7 @@ async function createBook(req, res, next) {
 
         res.status(200).json({
             status: 200,
-            data: {_id},
+            data: { _id },
         });
     } catch(err) {
         next(createError.InternalServerError(err.message));
@@ -32,7 +32,7 @@ async function getBooks(req, res, next) {
 async function getBook(req, res, next) {
     try {
         const { bookId } = req.params;
-        const book = await bookService.findById(bookId);
+        const user = await bookService.findById(bookId);
 
         if (!book) {
             return res.status(400).json({
@@ -56,7 +56,7 @@ async function updateBook(req, res, next) {
     try {
         const { bookId } = req.params;
         const bookData = req.body;
-        await bookService.findByIdAndUpdate(bookId, bookData);
+        await userService.findByIdAndUpdate(bookId, bookData);
 
         res.status(200).json({
             status: 200,
@@ -69,7 +69,7 @@ async function updateBook(req, res, next) {
 async function deleteBook(req, res, next) {
     try {
         const { bookId } = req.params;
-        await bookService.findByIdAndDelete(bookId);
+        await userService.findByIdAndDelete(bookId);
 
         res.status(200).json({
             status: 200,

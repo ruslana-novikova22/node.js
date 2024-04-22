@@ -1,12 +1,11 @@
-const booksService = require('../services/books.service');
+const usersService = require('../services/users.service');
 const authService = require('../services/auth.service');
-const userService = require('../services/user.service');
 
 const signin = async (req, res, next) => {
     try {
         const { email } = req.body;
 
-        const user = await booksService.findOne({ email });
+        const user = await usersService.findOne({ email });
 
         const accessToken = await authService.signAccessToken(user);
 

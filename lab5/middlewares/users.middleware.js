@@ -1,6 +1,6 @@
 const createError = require('http-errors');
 const ObjectId = require('mongoose').Types.ObjectId;
-const userService = require('../services/user.service');
+const userService = require('../services/users.service');
 const { UserCreateSchema, UserUpdateSchema } = require('../joi_validation_schemas/users.sсhemas');
 
 async function userByIdValidation(req, res, next) {

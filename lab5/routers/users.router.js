@@ -8,7 +8,6 @@ const { authenticationCheck } = require('../middlewares/auth.middleware');
 router.route('/')
     .post(middlewares.userCreationDataValidation, controllers.createUser);
 
-// Router-level middleware. Executed every time the app receives a request and checked authentication
 router.use(authenticationCheck);
 
 router.route('/')

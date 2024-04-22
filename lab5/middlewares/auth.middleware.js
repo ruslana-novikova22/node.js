@@ -1,6 +1,6 @@
 const createError = require('http-errors');
 const bcrypt = require('bcrypt');
-const booksService = require('../services/books.service');
+const usersService = require('../services/users.service');
 const authService = require('../services/auth.service');
 const { SigninSchema } = require('../joi_validation_schemas/auth.schemas');
 
@@ -28,7 +28,7 @@ async function signinDataValidation(req, res, next) {
 
         const { email, password } = req.body;
 
-        const user = await booksService.findOne({ email }, {});
+        const user = await usersService.findOne({ email }, {});
 
         if (!user) {
             throw createError.NotFound('There is no User with such email');

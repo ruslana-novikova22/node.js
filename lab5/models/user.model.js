@@ -24,7 +24,7 @@ const userSchema = new Schema({
         type: Date,
     },
     password: {
-        type: String, // Contains hashed password
+        type: String,
     },
 }, {
     timestamps: true,

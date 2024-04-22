@@ -5,10 +5,14 @@ async function create(user) {
     return _id;
 }
 
-async function find() {
+async function find({ searchString = '', page = 1, perPage = 20 }) {
+    const filter = {
+        firstName: { $regex: `^${searchString}`, $options: 'gi' },
+    };
+
     return {
-        items: await userModel.find({},{ password: 0, __v: 0 }),
-        count: await userModel.countDocuments(),
+        items: await userModel.find(filter, { password: 0, __v: 0 }).skip((page - 1) * perPage).limit(Number(perPage)),
+        count: await userModel.countDocuments(filter),
     }
 }
 

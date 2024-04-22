@@ -1,4 +1,4 @@
-const userService = require("../services/user.service");
+const userService = require("../services/users.service");
 const authService = require("../services/auth.service");
 const createError = require("http-errors");
 const bcrypt = require("bcrypt");

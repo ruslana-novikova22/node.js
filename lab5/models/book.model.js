@@ -26,9 +26,6 @@ const bookSchema = new Schema({
         type: String,
         enum: Object.values(bookFirmEnum)
     },
-    password: {
-        type: String,
-    },
 }, {
     timestamps: true,
 });

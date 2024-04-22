@@ -6,11 +6,11 @@ const middleware = require('../middlewares/books.middleware')
 
 router.route('/')
   .get(controller.getBooks)
-  .post(middleware.bookByIdValidation,controller.createBook)
+  .post(middleware.bookDataValidation,controller.createBook)
 
 router.route('/:id')
   .get(middleware.bookByIdValidation, controller.getBook)
-  .put(middleware.bookByIdValidation, middleware.bookByIdValidation, controller.updateBook)
+  .put(middleware.bookByIdValidation, middleware.bookDataValidation, controller.updateBook)
   .delete(middleware.bookByIdValidation, controller.deleteBook)
 
 module.exports = router;
