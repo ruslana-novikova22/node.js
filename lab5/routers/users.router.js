@@ -6,10 +6,10 @@ const middlewares = require('../middlewares/users.middleware');
 const { authenticationCheck } = require('../middlewares/auth.middleware');
 
 router.route('/')
-    .post(middlewares.userCreationDataValidation, controllers.createUser);
+    .post(authenticationCheck, middlewares.userCreationDataValidation, controllers.createUser);
 
 router.route('/')
-    .get(controllers.getUsers);
+    .get(authenticationCheck, controllers.getUsers);
 
 router.route('/:userId')
     .get(authenticationCheck, middlewares.userByIdValidation, controllers.getUser)

@@ -7,7 +7,7 @@ const signin = async (req, res, next) => {
 
         const user = await usersService.findOne({ email });
 
-        const accessToken = await authService.signAccessToken(user);
+        const accessToken = await authService.signAccessToken(user, false);
 
         res.cookie("access_token", accessToken, { httpOnly: true })
             .status(201)

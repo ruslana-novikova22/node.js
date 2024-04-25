@@ -40,6 +40,10 @@ async function signinDataValidation(req, res, next) {
             throw createError.Unauthorized('Incorrect password');
         }
 
+        if (!user.canDelete) {
+            throw createError.Forbidden('You do not have permission to delete');
+        }
+
         next();
     } catch (err) {
         next(err);
