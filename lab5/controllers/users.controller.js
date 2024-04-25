@@ -76,6 +76,11 @@ async function updateUser(req, res, next) {
 async function deleteUser(req, res, next) {
   try {
     const { userId } = req.params;
+
+    if (!req.auth.canDelete) {
+      throw createError.Forbidden('Can`t delete user')
+    } 
+
     await userService.findByIdAndDelete(userId);
 
     res.status(204).json({
