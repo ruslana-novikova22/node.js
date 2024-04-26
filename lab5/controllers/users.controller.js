@@ -78,7 +78,12 @@ async function deleteUser(req, res, next) {
     const { userId } = req.params;
 
     if (!req.auth.canDelete) {
-      throw createError.Forbidden('Can`t delete user')
+      return res.status(404).json({
+        status: 400,
+        error: {
+          message: "Can`t delete user",
+        },
+      });
     } 
 
     await userService.findByIdAndDelete(userId);
