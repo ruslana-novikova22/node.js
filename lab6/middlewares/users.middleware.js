@@ -90,7 +90,7 @@ const userUploadProfilePicture = multer({
     storage: multer.diskStorage({
       destination: 'public/profilePictures/',
     }),
-    limits: { fileSize: 1000 * 1024 },
+    limits: { fileSize: 10000 * 1024 },
     fileFilter: (req, file, callback) => {
       if (!['image/png', 'image/jpeg', 'image/jpg', 'image/webp'].includes(file.mimetype)) {
         return callback(createError.BadRequest("File is not allowed"));
