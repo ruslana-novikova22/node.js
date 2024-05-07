@@ -1,10 +1,6 @@
 const bookService = require('../services/books.service');
 const createError = require('http-errors');
 const bcrypt = require('bcrypt');
-const fs = require('fs');
-const path = require('path');
-const { promisify } = require('util');
-const deleteFileAsync = promisify(fs.unlink);
 
 async function createBook(req, res, next) {
     try {
@@ -15,7 +11,7 @@ async function createBook(req, res, next) {
 
         res.status(200).json({
             status: 200,
-            data: {_id},
+            data: { _id },
         });
     } catch(err) {
         next(createError.InternalServerError(err.message));
@@ -36,7 +32,7 @@ async function getBooks(req, res, next) {
 async function getBook(req, res, next) {
     try {
         const { bookId } = req.params;
-        const book = await bookService.findById(bookId);
+        const user = await bookService.findById(bookId);
 
         if (!book) {
             return res.status(400).json({
@@ -60,7 +56,7 @@ async function updateBook(req, res, next) {
     try {
         const { bookId } = req.params;
         const bookData = req.body;
-        await bookService.findByIdAndUpdate(bookId, bookData);
+        await userService.findByIdAndUpdate(bookId, bookData);
 
         res.status(200).json({
             status: 200,
@@ -73,7 +69,7 @@ async function updateBook(req, res, next) {
 async function deleteBook(req, res, next) {
     try {
         const { bookId } = req.params;
-        await bookService.findByIdAndDelete(bookId);
+        await userService.findByIdAndDelete(bookId);
 
         res.status(200).json({
             status: 200,
@@ -82,42 +78,6 @@ async function deleteBook(req, res, next) {
         next(createError.InternalServerError(err.message));
     }
 };
-
-async function updateBookProfilePicture(req, res, next) {
-    try {
-        const { bookId } = req.params;
-
-        console.log(req.file);
-
-        // delete previous picture
-        const book = await bookService.findById(bookId);
-        if (book.profilePicture) {
-            const filePath = path.join(__dirname, '..', 'public', 'profilePictures', book.profilePicture);
-            await deleteFileAsync(filePath);
-        }
-
-        // update
-        bookService.findByIdAndUpdate(bookId, { profilePicture: req.file.filename });
-
-        res.status(200).json({
-            status: 200,
-        });
-    } catch(err) {
-        next(createError.InternalServerError(err.message));
-    }
-};
-
-async function uploadBooks(req, res, next) {
-    try {
-        console.log(req.file);
-        const jsonData = JSON.parse(req.file.buffer.toString());
-        // todo: save data to DB
-        res.json(jsonData);
-    } catch(err) {
-        next(createError.InternalServerError(err.message));
-    }
-}
-
 
 module.exports = {
     createBook,
@@ -125,6 +85,4 @@ module.exports = {
     getBook,
     updateBook,
     deleteBook,
-    updateBookProfilePicture,
-    uploadBooks,
 };
