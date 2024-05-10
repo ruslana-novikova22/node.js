@@ -15,8 +15,15 @@ router.route('/:userId')
     .get(authenticationCheck, middlewares.userByIdValidation, controllers.getUser)
     .patch(authenticationCheck, middlewares.userByIdValidation, middlewares.userUpdateDataValidation, controllers.updateUser)
     .delete(authenticationCheck, middlewares.userByIdValidation, controllers.deleteUser);
-router.route('/:userId/profilePicture')
-    .put(middlewares.userByIdValidation, middlewares.userUploadProfilePicture, controllers.updateUserProfilePicture);
+
+router
+    .route("/:userId/profilePicture")
+    .put(
+        middlewares.userByIdValidation,
+        middlewares.userUploadProfilePicture,
+        controllers.updateUserProfilePicture
+    )
+    .get(middlewares.userByIdValidation, controllers.getUserProfilePicture);
 
 router.route('/upload')
     .post(middlewares.usersUpload, controllers.uploadUsers);

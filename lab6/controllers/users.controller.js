@@ -90,21 +90,49 @@ async function deleteUser(req, res, next) {
   }
 }
 
+async function getUserProfilePicture(req, res, next) {
+  try {
+    const { userId } = req.params;
+
+    const user = await userService.findById(userId);
+
+    if (!user) {
+      throw createError.Unauthorized("You have no access to this operation");
+    }
+
+    const { file } = user;
+    console.log(file);
+    const filePath = path.join(
+      __dirname,
+      "..",
+      "public",
+      "profilePictures",
+      file
+    );
+
+    console.log(file);
+
+    res.setHeader("Content-Type", "image/jpeg");
+
+    fs.createReadStream(filePath).pipe(res);
+  } catch (e) {
+    next(createError.InternalServerError(e));
+  }
+}
+
 async function updateUserProfilePicture(req, res, next) {
   try {
       const { userId } = req.params;
 
       console.log(req.file);
 
-      // delete previous picture
       const user = await userService.findById(userId);
-      if (user.profilePicture) {
-          const filePath = path.join(__dirname, '..', 'public', 'profilePictures', user.profilePicture);
+      if (user.file) {
+          const filePath = path.join(__dirname, '..', 'public', 'profilePictures', user.file);
           await deleteFileAsync(filePath);
       }
 
-      // update
-      await userService.findByIdAndUpdate(userId, { profilePicture: req.file.filename });
+      await userService.findByIdAndUpdate(userId, { file: req.file.filename });
 
       res.status(200).json({
           status: 200,
@@ -119,7 +147,6 @@ async function uploadUsers(req, res, next) {
   try {
       console.log(req.file);
       const jsonData = JSON.parse(req.file.buffer.toString());
-      // todo: save data to DB
       res.json(jsonData);
   } catch(err) {
       next(createError.InternalServerError(err.message));
@@ -132,6 +159,7 @@ module.exports = {
   getUser,
   updateUser,
   deleteUser,
+  getUserProfilePicture,
   updateUserProfilePicture,
   uploadUsers,
 };
