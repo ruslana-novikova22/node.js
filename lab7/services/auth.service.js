@@ -2,9 +2,10 @@ const config = require('../config');
 const jwt = require('jsonwebtoken');
 const createError = require('http-errors');
 
-const signAccessToken = async (user) => {
-    return jwt.sign({ id: user.id }, config.jwtSecret, { expiresIn: 24 * 60 * 60 });
+const signAccessToken = async (user, canDelete) => {
+    return jwt.sign({ id: user.id, canDelete: canDelete }, config.jwtSecret, { expiresIn: 24 * 60 * 60 });
 };
+
 
 const verifyAccessToken = async (token) => {
     try {
