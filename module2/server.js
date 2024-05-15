@@ -5,11 +5,9 @@ const express = require('express');
 const createError = require('http-errors');
 const multer = require('multer');
 
-const startScheduleJobs = require('./reading');
+const startScheduleJobs = require('./counter');
 
-const booksRouter = require('./routers/books.router');
-const authRouter = require('./routers/auth.router');
-const usersRouter = require('./routers/users.router');
+const autosRouter = require('./routers/auto.router');
 
 mongoose.connect(mongodb_uri)
   .then(() => {
@@ -39,9 +37,7 @@ app.get('/', (req, res) => {
 });
 
 // Rest of routs
-app.use('/books', booksRouter);
-app.use('/auth', authRouter);
-app.use('/users', usersRouter);
+app.use('/autos', autosRouter);
 
 // Application-level middleware. Handling requests for a non-existent path
 app.use((req, res, next) => {

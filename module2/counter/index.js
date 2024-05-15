@@ -1,7 +1,6 @@
 const config = require('../config');
 const enableScheduleJobs = true;
-const startReadingJob = require('./reading');
-const startUserLoginReminderJob = require('./userLoginReminder');
+const startCountTotalPriceJob = require('./summary');
 
 function start() {
 if (!enableScheduleJobs) {
@@ -9,8 +8,7 @@ if (!enableScheduleJobs) {
         return;
     }
 
-    startReadingJob();
-    startUserLoginReminderJob();
+    startCountTotalPriceJob();
 }
 
 module.exports = start;
